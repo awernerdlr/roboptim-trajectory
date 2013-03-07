@@ -21,7 +21,6 @@
 
 #include <boost/assign/list_of.hpp>
 #include <boost/mpl/vector.hpp>
-#include <boost/numeric/ublas/io.hpp>
 
 #include <roboptim/core/finite-difference-gradient.hh>
 #include <roboptim/core/solver-factory.hh>
@@ -83,7 +82,7 @@ public:
 		     size_type functionId = 0) const throw ()
   {
     assert(functionId==0);
-    grad.clear();
+    grad.setZero();
 #ifdef BICYCLE_COST_FUNCTION
     if (x[3] > 0) {
       grad[3] =  m;
@@ -161,7 +160,7 @@ int run_test ()
   try
   {
     Function::vector_t x (params.size ());
-    x.clear ();
+    x.setZero ();
     checkGradientAndThrow (sumCost, 0, x, 2e-3);
 
     x = params;

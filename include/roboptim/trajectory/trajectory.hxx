@@ -17,8 +17,6 @@
 
 #ifndef ROBOPTIM_TRAJECTORY_TRAJECTORY_HXX
 # define ROBOPTIM_TRAJECTORY_TRAJECTORY_HXX
-# include <boost/numeric/ublas/matrix_proxy.hpp>
-# include <boost/numeric/ublas/vector_proxy.hpp>
 
 namespace roboptim
 {
@@ -80,7 +78,6 @@ namespace roboptim
   typename Trajectory<dorder>::vector_t
   Trajectory<dorder>::state (double t, size_type order) const throw ()
   {
-    using namespace boost::numeric::ublas;
     const size_type dimension = this->outputSize ();
     vector_t result ((order + 1) * dimension);
 
@@ -95,7 +92,6 @@ namespace roboptim
   Trajectory<dorder>::state
   (StableTimePoint stp, size_type order) const throw ()
   {
-    using namespace boost::numeric::ublas;
     const size_type dimension = this->outputSize ();
     vector_t result ((order + 1) * dimension);
 
@@ -111,16 +107,13 @@ namespace roboptim
   Trajectory<dorder>::variationStateWrtParam (double t, size_type order)
     const throw ()
   {
-    using namespace boost::numeric::ublas;
     const size_type dimension = this->outputSize ();
     const size_type parameterSize = parameters ().size ();
     jacobian_t result (dimension * (order + 1), parameterSize);
 
     for (size_type o = 0; o <= order; ++o)
       {
-	range xrange (o * dimension, (o + 1) * dimension);
-	range yrange (0, parameterSize);
-	project (result, xrange, yrange) = this->variationDerivWrtParam (t, o);
+	result.block(o*dimension,0,dimension,parameterSize) = this->variationDerivWrtParam (t, o);
       }
     return result;
   }
@@ -131,16 +124,13 @@ namespace roboptim
   (StableTimePoint stp, size_type order)
     const throw ()
   {
-    using namespace boost::numeric::ublas;
     const size_type dimension = this->outputSize ();
     const size_type parameterSize = parameters ().size ();
     jacobian_t result (dimension * (order + 1), parameterSize);
 
     for (size_type o = 0; o <= order; ++o)
       {
-	range xrange (o * dimension, (o + 1) * dimension);
-	range yrange (0, parameterSize);
-	project (result, xrange, yrange) =
+	result.block(o*dimension,0,dimension,parameterSize) =
 	  this->variationDerivWrtParam (stp, o);
       }
     return result;

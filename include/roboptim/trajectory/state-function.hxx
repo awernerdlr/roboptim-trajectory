@@ -67,13 +67,12 @@ namespace roboptim
 				   const argument_t& p,
 				   size_type i) const throw ()
   {
-    using namespace boost::numeric::ublas;
     static boost::shared_ptr<trajectory_t> updatedTrajectory =
       boost::shared_ptr<trajectory_t> (trajectory_.clone ());
     updatedTrajectory->setParameters (p);
-    grad = prod (function_->gradient
-		 (updatedTrajectory->state (tpt_, this->order_), i),
-		 updatedTrajectory->variationStateWrtParam (tpt_, this->order_));
+    grad = function_->gradient
+		 (updatedTrajectory->state (tpt_, this->order_), i) *
+		 updatedTrajectory->variationStateWrtParam (tpt_, this->order_);
   }
 
 } // end of namespace roboptim.

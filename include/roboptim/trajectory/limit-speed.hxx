@@ -20,7 +20,6 @@
 # include <roboptim/trajectory/sys.hh>
 
 # include <boost/format.hpp>
-# include <boost/numeric/ublas/vector.hpp>
 # include <boost/scoped_ptr.hpp>
 
 # include <roboptim/core/finite-difference-gradient.hh>
@@ -65,7 +64,6 @@ namespace roboptim
   void
   LimitSpeed<T>::impl_compute (result_t& res, const argument_t& p) const throw ()
   {
-    using namespace boost::numeric::ublas;
     res.clear ();
 
     boost::scoped_ptr<T> updatedTrajectory (trajectory_.clone ());

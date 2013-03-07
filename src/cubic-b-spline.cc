@@ -16,7 +16,6 @@
 // along with roboptim.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <boost/numeric/conversion/converter.hpp>
-#include <boost/numeric/ublas/io.hpp>
 #include <roboptim/trajectory/sys.hh>
 
 #include <roboptim/core/indent.hh>
@@ -280,7 +279,6 @@ namespace roboptim
   CubicBSpline::variationDerivWrtParam (double t, size_type order)
     const throw ()
   {
-    using boost::numeric::ublas::subrange;
 
     t = detail::fixTime (t, *this);
     const size_type k = interval (t);

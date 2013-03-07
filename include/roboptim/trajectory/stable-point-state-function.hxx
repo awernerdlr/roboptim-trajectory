@@ -70,7 +70,6 @@ namespace roboptim
 				   size_type i) const throw ()
   {
     assert (i == 0);
-    using namespace boost::numeric::ublas;
 
     static boost::shared_ptr<trajectory_t> updatedTrajectory =
       boost::shared_ptr<trajectory_t> (trajectory_.clone ());
@@ -79,9 +78,9 @@ namespace roboptim
     // Compute derivatives w.r.t parameters.
     // Derivative w.r.t p_0 is wrong here.
     const value_type t = tpt_.getTime (updatedTrajectory->timeRange ());
-    grad = prod (function_->gradient
-		 (updatedTrajectory->state (t, this->order_), i),
-		 updatedTrajectory->variationStateWrtParam (t, this->order_));
+    grad = function_->gradient
+		 (updatedTrajectory->state (t, this->order_), i) *
+		 updatedTrajectory->variationStateWrtParam (t, this->order_);
 
     // Compute derivatives w.r.t p_0.
     const vector_t df_dstate =

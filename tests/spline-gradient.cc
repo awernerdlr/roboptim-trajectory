@@ -20,7 +20,6 @@
 #include <roboptim/trajectory/sys.hh>
 
 #include <boost/format.hpp>
-#include <boost/numeric/ublas/io.hpp>
 
 #include <roboptim/core/finite-difference-gradient.hh>
 
@@ -56,7 +55,7 @@ int run_test ()
 
 
 
-      params.clear ();
+      params.setZero ();
       params[x] = 1.;
 
       // Build a cubic spline of dimension 1

@@ -21,7 +21,6 @@
 
 #include <boost/assign/list_of.hpp>
 #include <boost/mpl/vector.hpp>
-#include <boost/numeric/ublas/io.hpp>
 
 #include <roboptim/core/finite-difference-gradient.hh>
 #include <roboptim/core/solver-factory.hh>
@@ -37,7 +36,8 @@
 #include <roboptim/trajectory/visualization/trajectory.hh>
 
 
-#include <roboptim/core/plugin/cfsqp.hh>
+#include <roboptim/core/plugin/ipopt.hh>
+#include <roboptim/core/plugin/ipopt-common.hh>
 
 
 #include "shared-tests/common.hh"
@@ -46,6 +46,7 @@ using namespace roboptim;
 using namespace roboptim::visualization;
 using namespace roboptim::visualization::gnuplot;
 
+typedef IpoptSolver::
 typedef CFSQPSolver::problem_t::constraints_t constraint_t;
 typedef CFSQPSolver solver_t;
 
@@ -113,7 +114,7 @@ int run_test ()
   try
   {
     Function::vector_t x (params.size ());
-    x.clear ();
+    x.setZero ();
     checkGradientAndThrow (cost, 0, x, 2e-3);
 
     x = params;

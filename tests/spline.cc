@@ -19,8 +19,7 @@
 
 #include "shared-tests/common.hh"
 
-#include <boost/numeric/ublas/io.hpp>
-
+#include <roboptim/core/derivable-function.hh>
 #include <roboptim/core/finite-difference-gradient.hh>
 
 #include <roboptim/core/visualization/gnuplot.hh>
@@ -60,7 +59,7 @@ struct SplineDerivWrtParameters : public DerivableFunction
   {
     CubicBSpline spline (spline_);
     spline.setParameters (x);
-    gradient = row (spline.variationConfigWrtParam (t_), functionId);
+    gradient = spline.variationConfigWrtParam (t_).middleRows<1>(functionId);
   }
 
 private:

@@ -19,8 +19,6 @@
 # define ROBOPTIM_TRAJECTORY_FREETIMETRAJECTORY_HXX
 # include <cmath>
 
-# include <boost/numeric/ublas/matrix.hpp>
-# include <boost/numeric/ublas/matrix_proxy.hpp>
 
 namespace roboptim
 {
@@ -106,7 +104,6 @@ namespace roboptim
   typename FreeTimeTrajectory<T>::jacobian_t
   FreeTimeTrajectory<T>::variationConfigWrtParam (double t) const throw ()
   {
-    using namespace boost::numeric::ublas;
     value_type scaled = this->scaleTime (t);
 
     double tMin = this->getLowerBound (this->trajectory_->timeRange ());
@@ -133,7 +130,6 @@ namespace roboptim
     if (order == 0)
       return this->variationConfigWrtParam (t);
 
-    using namespace boost::numeric::ublas;
     value_type scaled = this->scaleTime (t);
     value_type tmin = this->getLowerBound (this->trajectory_->timeRange ());
 
@@ -161,7 +157,6 @@ namespace roboptim
   FreeTimeTrajectory<T>::variationConfigWrtParam
   (StableTimePoint stp) const throw ()
   {
-    using namespace boost::numeric::ublas;
 
     jacobian_t result (this->outputSize (),
 		       this->parameters ().size ());
@@ -186,7 +181,6 @@ namespace roboptim
     if (order == 0)
       return this->variationConfigWrtParam (stp);
 
-    using namespace boost::numeric::ublas;
 
     jacobian_t result (this->outputSize (),
 		       this->parameters ().size ());
